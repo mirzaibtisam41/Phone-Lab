@@ -1,7 +1,7 @@
 const paypal = require("paypal-rest-sdk");
 
 paypal.configure({
-  mode: "",
+  mode: "live",
   client_id: "",
   client_secret: "",
 });

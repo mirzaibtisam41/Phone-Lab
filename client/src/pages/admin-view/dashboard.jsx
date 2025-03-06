@@ -11,8 +11,6 @@ function AdminDashboard() {
   const dispatch = useDispatch();
   const { featureImageList } = useSelector((state) => state.commonFeature);
 
-  console.log(uploadedImageUrl, "uploadedImageUrl");
-
   function handleUploadFeatureImage() {
     dispatch(addFeatureImage(uploadedImageUrl)).then((data) => {
       if (data?.payload?.success) {
@@ -27,8 +25,6 @@ function AdminDashboard() {
     dispatch(getFeatureImages());
   }, [dispatch]);
 
-  console.log(featureImageList, "featureImageList");
-
   return (
     <div>
       <ProductImageUpload
@@ -41,7 +37,7 @@ function AdminDashboard() {
         isCustomStyling={true}
         // isEditMode={currentEditedId !== null}
       />
-      <Button onClick={handleUploadFeatureImage} className="mt-5 w-full">
+      <Button disabled={!uploadedImageUrl} onClick={handleUploadFeatureImage} className="mt-5 w-full">
         Upload
       </Button>
       <div className="flex flex-col gap-4 mt-5">

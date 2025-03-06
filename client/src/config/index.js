@@ -58,11 +58,11 @@ export const addProductFormElements = [
     name: "category",
     componentType: "select",
     options: [
-      { id: "men", label: "Men" },
-      { id: "women", label: "Women" },
-      { id: "kids", label: "Kids" },
+      { id: "apple", label: "Apple" },
+      { id: "samsung", label: "Samsung" },
+      { id: "google", label: "Google" },
+      { id: "universalAccessories", label: "Universal Accessories" },
       { id: "accessories", label: "Accessories" },
-      { id: "footwear", label: "Footwear" },
     ],
   },
   {
@@ -70,12 +70,12 @@ export const addProductFormElements = [
     name: "brand",
     componentType: "select",
     options: [
-      { id: "nike", label: "Nike" },
-      { id: "adidas", label: "Adidas" },
-      { id: "puma", label: "Puma" },
-      { id: "levi", label: "Levi's" },
-      { id: "zara", label: "Zara" },
-      { id: "h&m", label: "H&M" },
+      { id: "apple", label: "Apple" },
+      { id: "samsung", label: "Samsung" },
+      { id: "google", label: "Google" },
+      { id: "moto", label: "Moto" },
+      { id: "oppo", label: "Oppo" },
+      { id: "huawei", label: "Huawei" },
     ],
   },
   {
@@ -113,23 +113,23 @@ export const shoppingViewHeaderMenuItems = [
     path: "/shop/listing",
   },
   {
-    id: "men",
-    label: "Men",
+    id: "apple",
+    label: "Apple",
     path: "/shop/listing",
   },
   {
-    id: "women",
-    label: "Women",
+    id: "samsung",
+    label: "Samsung",
     path: "/shop/listing",
   },
   {
-    id: "kids",
-    label: "Kids",
+    id: "google",
+    label: "Google",
     path: "/shop/listing",
   },
   {
-    id: "footwear",
-    label: "Footwear",
+    id: "universalAccessories",
+    label: "Universal Accessories",
     path: "/shop/listing",
   },
   {
@@ -163,19 +163,19 @@ export const brandOptionsMap = {
 
 export const filterOptions = {
   category: [
-    { id: "men", label: "Men" },
-    { id: "women", label: "Women" },
-    { id: "kids", label: "Kids" },
+    { id: "apple", label: "Apple" },
+    { id: "samsung", label: "Samsung" },
+    { id: "google", label: "Google" },
+    { id: "universalAccessories", label: "Universal Accessories" },
     { id: "accessories", label: "Accessories" },
-    { id: "footwear", label: "Footwear" },
   ],
-  brand: [
-    { id: "nike", label: "Nike" },
-    { id: "adidas", label: "Adidas" },
-    { id: "puma", label: "Puma" },
-    { id: "levi", label: "Levi's" },
-    { id: "zara", label: "Zara" },
-    { id: "h&m", label: "H&M" },
+  brands: [
+    { id: "apple", label: "Apple" },
+    { id: "samsung", label: "Samsung" },
+    { id: "google", label: "Google" },
+    { id: "moto", label: "Moto" },
+    { id: "oppo", label: "Oppo" },
+    { id: "huawei", label: "Huawei" },
   ],
 };
 
