@@ -1,21 +1,12 @@
 import { Button } from "@/components/ui/button";
-import bannerOne from "../../assets/banner-1.webp";
-import bannerTwo from "../../assets/banner-2.webp";
-import bannerThree from "../../assets/banner-3.webp";
 import {
-  Airplay,
-  BabyIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
-  CloudLightning,
-  Heater,
-  Images,
-  Shirt,
-  ShirtIcon,
-  ShoppingBasket,
-  UmbrellaIcon,
-  WashingMachine,
-  WatchIcon,
+  Smartphone, 
+  Tablet, 
+  Watch, 
+  Headphones, 
+  Plug, 
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useEffect, useState } from "react";
@@ -32,20 +23,20 @@ import ProductDetailsDialog from "@/components/shopping-view/product-details";
 import { getFeatureImages } from "@/store/common-slice";
 
 const categoriesWithIcon = [
-  { id: "apple", label: "Apple", icon: ShirtIcon },
-  { id: "samsung", label: "Samsung", icon: CloudLightning },
-  { id: "google", label: "Google", icon: BabyIcon },
-  { id: "universalAccessories", label: "Universal Accessories", icon: UmbrellaIcon },
-  { id: "accessories", label: "Accessories", icon: WatchIcon },
+  { id: "mobilePhones", label: "Mobile Phones", icon: Smartphone },
+  { id: "tablets", label: "Tablets", icon: Tablet },
+  { id: "wearables", label: "Wearables", icon: Watch },
+  { id: "universalAccessories", label: "Universal Accessories", icon: Headphones },
+  { id: "accessories", label: "Accessories", icon: Plug },
 ];
 
 const brandsWithIcon = [
-  { id: "apple", label: "Apple", icon: Shirt },
-  { id: "samsung", label: "Samsung", icon: WashingMachine },
-  { id: "google", label: "Google", icon: ShoppingBasket },
-  { id: "moto", label: "Moto", icon: Airplay },
-  { id: "oppo", label: "Oppo", icon: Images },
-  { id: "huawei", label: "Huawei", icon: Heater },
+  { id: "apple", label: "Apple", icon: 'https://res.cloudinary.com/dpfqoeiig/image/upload/c_thumb,w_200,g_face/v1741274275/kxbn0je3kuop65t9olsa.png' },
+  { id: "samsung", label: "Samsung", icon: 'https://res.cloudinary.com/dpfqoeiig/image/upload/c_thumb,w_200,g_face/v1741274294/elybk7nvagczuqpqcqyy.png' },
+  { id: "google", label: "Google", icon: 'https://res.cloudinary.com/dpfqoeiig/image/upload/c_thumb,w_200,g_face/v1741274303/ea2vukwfsdcay7sbvr8g.png' },
+  { id: "moto", label: "Motorola", icon: 'https://res.cloudinary.com/dpfqoeiig/image/upload/c_thumb,w_200,g_face/v1741274314/mphz8wqpc8cumjrwopez.png' },
+  { id: "oppo", label: "Oppo", icon: 'https://res.cloudinary.com/dpfqoeiig/image/upload/c_thumb,w_200,g_face/v1741274339/apnunvihlgnhpq4f1geg.png' },
+  { id: "huawei", label: "Huawei", icon: 'https://res.cloudinary.com/dpfqoeiig/image/upload/c_thumb,w_200,g_face/v1741274327/fmeynyql6dwybqcayma3.png' },
 ];
 function ShoppingHome() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -128,7 +119,7 @@ function ShoppingHome() {
                 key={index}
                 className={`${
                   index === currentSlide ? "opacity-100" : "opacity-0"
-                } absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000`}
+                } absolute top-0 left-0 w-full h-full object-fill transition-opacity duration-1000`}
               />
             ))
           : null}
@@ -162,7 +153,7 @@ function ShoppingHome() {
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8">
-            Shop by category
+            Shop by Category
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {categoriesWithIcon.map((categoryItem) => (
@@ -184,7 +175,7 @@ function ShoppingHome() {
 
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8">Shop by Brands</h2>
+          <h2 className="text-3xl font-bold text-center mb-8">Shop by Brand</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {brandsWithIcon.map((brandItem) => (
               <Card
@@ -192,9 +183,9 @@ function ShoppingHome() {
                 className="cursor-pointer hover:shadow-lg transition-shadow"
               >
                 <CardContent className="flex flex-col items-center justify-center p-6">
-                  <brandItem.icon className="w-12 h-12 mb-4 text-primary" />
-                  <span className="font-bold">{brandItem.label}</span>
+                  <img src={brandItem.icon} className="w-32 h-32 object-contain" />
                 </CardContent>
+
               </Card>
             ))}
           </div>
