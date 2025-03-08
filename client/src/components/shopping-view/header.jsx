@@ -1,14 +1,14 @@
-import { HousePlug, LogOut, Menu, ShoppingCart, UserCog } from "lucide-react";
+import {HousePlug, LogOut, Menu, ShoppingCart, UserCog} from 'lucide-react';
 import {
   Link,
   useLocation,
   useNavigate,
   useSearchParams,
-} from "react-router-dom";
-import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
-import { Button } from "../ui/button";
-import { useDispatch, useSelector } from "react-redux";
-import { shoppingViewHeaderMenuItems } from "@/config";
+} from 'react-router-dom';
+import {Sheet, SheetContent, SheetTrigger} from '../ui/sheet';
+import {Button} from '../ui/button';
+import {useDispatch, useSelector} from 'react-redux';
+import {shoppingViewHeaderMenuItems} from '@/config';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,13 +16,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { Avatar, AvatarFallback } from "../ui/avatar";
-import { logoutUser } from "@/store/auth-slice";
-import UserCartWrapper from "./cart-wrapper";
-import { useEffect, useState } from "react";
-import { fetchCartItems } from "@/store/shop/cart-slice";
-import { Label } from "../ui/label";
+} from '../ui/dropdown-menu';
+import {Avatar, AvatarFallback} from '../ui/avatar';
+import {logoutUser} from '@/store/auth-slice';
+import UserCartWrapper from './cart-wrapper';
+import {useEffect, useState} from 'react';
+import {fetchCartItems} from '@/store/shop/cart-slice';
+import {Label} from '../ui/label';
 
 function MenuItems() {
   const navigate = useNavigate();
@@ -30,19 +30,19 @@ function MenuItems() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   function handleNavigate(getCurrentMenuItem) {
-    sessionStorage.removeItem("filters");
+    sessionStorage.removeItem('filters');
     const currentFilter =
-      getCurrentMenuItem.id !== "home" &&
-      getCurrentMenuItem.id !== "products" &&
-      getCurrentMenuItem.id !== "search"
+      getCurrentMenuItem.id !== 'home' &&
+      getCurrentMenuItem.id !== 'products' &&
+      getCurrentMenuItem.id !== 'search'
         ? {
             category: [getCurrentMenuItem.id],
           }
         : null;
 
-    sessionStorage.setItem("filters", JSON.stringify(currentFilter));
+    sessionStorage.setItem('filters', JSON.stringify(currentFilter));
 
-    location.pathname.includes("listing") && currentFilter !== null
+    location.pathname.includes('listing') && currentFilter !== null
       ? setSearchParams(
           new URLSearchParams(`?category=${getCurrentMenuItem.id}`)
         )
@@ -65,8 +65,8 @@ function MenuItems() {
 }
 
 function HeaderRightContent() {
-  const { user } = useSelector((state) => state.auth);
-  const { cartItems } = useSelector((state) => state.shopCart);
+  const {user} = useSelector((state) => state.auth);
+  const {cartItems} = useSelector((state) => state.shopCart);
   const [openCartSheet, setOpenCartSheet] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -113,17 +113,26 @@ function HeaderRightContent() {
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent side="right" className="w-56">
-          <DropdownMenuLabel>Logged in as {user?.userName}</DropdownMenuLabel>
+          {user?.userName ? (
+            <DropdownMenuLabel>Logged in as {user?.userName}</DropdownMenuLabel>
+          ) : null}
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => navigate("/shop/account")}>
+          <DropdownMenuItem onClick={() => navigate('/shop/account')}>
             <UserCog className="mr-2 h-4 w-4" />
             Account
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={handleLogout}>
-            <LogOut className="mr-2 h-4 w-4" />
-            Logout
-          </DropdownMenuItem>
+          {user ? (
+            <DropdownMenuItem onClick={handleLogout}>
+              <LogOut className="mr-2 h-4 w-4" />
+              Logout
+            </DropdownMenuItem>
+          ) : (
+            <DropdownMenuItem onClick={() => navigate('/auth/login')}>
+              <LogOut className="mr-2 h-4 w-4" />
+              Login
+            </DropdownMenuItem>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
@@ -131,7 +140,7 @@ function HeaderRightContent() {
 }
 
 function ShoppingHeader() {
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const {isAuthenticated} = useSelector((state) => state.auth);
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background">
