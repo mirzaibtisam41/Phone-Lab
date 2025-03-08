@@ -24,7 +24,7 @@ import {useEffect, useState} from 'react';
 import {fetchCartItems} from '@/store/shop/cart-slice';
 import {Label} from '../ui/label';
 
-function MenuItems() {
+function MenuItems({setOpenSheet}) {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -35,9 +35,7 @@ function MenuItems() {
       getCurrentMenuItem.id !== 'home' &&
       getCurrentMenuItem.id !== 'products' &&
       getCurrentMenuItem.id !== 'search'
-        ? {
-            category: [getCurrentMenuItem.id],
-          }
+        ? {category: [getCurrentMenuItem.id]}
         : null;
 
     sessionStorage.setItem('filters', JSON.stringify(currentFilter));
@@ -47,15 +45,18 @@ function MenuItems() {
           new URLSearchParams(`?category=${getCurrentMenuItem.id}`)
         )
       : navigate(getCurrentMenuItem.path);
+
+    // Close the sidebar
+    setOpenSheet(false);
   }
 
   return (
     <nav className="flex flex-col mb-3 lg:mb-0 lg:items-center gap-6 lg:flex-row">
       {shoppingViewHeaderMenuItems.map((menuItem) => (
         <Label
+          key={menuItem.id}
           onClick={() => handleNavigate(menuItem)}
           className="text-sm font-medium cursor-pointer"
-          key={menuItem.id}
         >
           {menuItem.label}
         </Label>
@@ -96,11 +97,7 @@ function HeaderRightContent() {
         </Button>
         <UserCartWrapper
           setOpenCartSheet={setOpenCartSheet}
-          cartItems={
-            cartItems && cartItems.items && cartItems.items.length > 0
-              ? cartItems.items
-              : []
-          }
+          cartItems={cartItems?.items?.length > 0 ? cartItems.items : []}
         />
       </Sheet>
 
@@ -113,9 +110,9 @@ function HeaderRightContent() {
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent side="right" className="w-56">
-          {user?.userName ? (
+          {user?.userName && (
             <DropdownMenuLabel>Logged in as {user?.userName}</DropdownMenuLabel>
-          ) : null}
+          )}
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => navigate('/shop/account')}>
             <UserCog className="mr-2 h-4 w-4" />
@@ -141,6 +138,7 @@ function HeaderRightContent() {
 
 function ShoppingHeader() {
   const {isAuthenticated} = useSelector((state) => state.auth);
+  const [openSheet, setOpenSheet] = useState(false);
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background">
@@ -149,22 +147,26 @@ function ShoppingHeader() {
           <HousePlug className="h-6 w-6" />
           <span className="font-bold">Phone Lab</span>
         </Link>
-        <Sheet>
+        <Sheet open={openSheet} onOpenChange={setOpenSheet}>
           <SheetTrigger asChild>
-            <Button variant="outline" size="icon" className="lg:hidden">
+            <Button
+              variant="outline"
+              size="icon"
+              className="lg:hidden"
+              onClick={() => setOpenSheet(true)}
+            >
               <Menu className="h-6 w-6" />
               <span className="sr-only">Toggle header menu</span>
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="w-full max-w-xs">
-            <MenuItems />
+            <MenuItems setOpenSheet={setOpenSheet} />
             <HeaderRightContent />
           </SheetContent>
         </Sheet>
         <div className="hidden lg:block">
-          <MenuItems />
+          <MenuItems setOpenSheet={setOpenSheet} />
         </div>
-
         <div className="hidden lg:block">
           <HeaderRightContent />
         </div>
