@@ -1,5 +1,5 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import axios from 'axios';
 
 const initialState = {
   orderList: [],
@@ -7,10 +7,10 @@ const initialState = {
 };
 
 export const getAllOrdersForAdmin = createAsyncThunk(
-  "/order/getAllOrdersForAdmin",
+  '/order/getAllOrdersForAdmin',
   async () => {
     const response = await axios.get(
-      `http://localhost:5000/api/admin/orders/get`
+      import.meta.env.VITE_BACKEND_URL + `/api/admin/orders/get`
     );
 
     return response.data;
@@ -18,10 +18,10 @@ export const getAllOrdersForAdmin = createAsyncThunk(
 );
 
 export const getOrderDetailsForAdmin = createAsyncThunk(
-  "/order/getOrderDetailsForAdmin",
+  '/order/getOrderDetailsForAdmin',
   async (id) => {
     const response = await axios.get(
-      `http://localhost:5000/api/admin/orders/details/${id}`
+      import.meta.env.VITE_BACKEND_URL + `/api/admin/orders/details/${id}`
     );
 
     return response.data;
@@ -29,21 +29,18 @@ export const getOrderDetailsForAdmin = createAsyncThunk(
 );
 
 export const updateOrderStatus = createAsyncThunk(
-  "/order/updateOrderStatus",
-  async ({ id, orderStatus }) => {
-    const response = await axios.put(
-      `http://localhost:5000/api/admin/orders/update/${id}`,
-      {
-        orderStatus,
-      }
-    );
+  import.meta.env.VITE_BACKEND_URL + '/order/updateOrderStatus',
+  async ({id, orderStatus}) => {
+    const response = await axios.put(`/api/admin/orders/update/${id}`, {
+      orderStatus,
+    });
 
     return response.data;
   }
 );
 
 const adminOrderSlice = createSlice({
-  name: "adminOrderSlice",
+  name: 'adminOrderSlice',
   initialState,
   reducers: {
     resetOrderDetails: (state) => {
@@ -77,6 +74,6 @@ const adminOrderSlice = createSlice({
   },
 });
 
-export const { resetOrderDetails } = adminOrderSlice.actions;
+export const {resetOrderDetails} = adminOrderSlice.actions;
 
 export default adminOrderSlice.reducer;

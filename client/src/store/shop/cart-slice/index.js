@@ -1,5 +1,5 @@
-import axios from "axios";
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from 'axios';
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 
 const initialState = {
   cartItems: [],
@@ -7,10 +7,10 @@ const initialState = {
 };
 
 export const addToCart = createAsyncThunk(
-  "cart/addToCart",
-  async ({ userId, productId, quantity }) => {
+  'cart/addToCart',
+  async ({userId, productId, quantity}) => {
     const response = await axios.post(
-      "http://localhost:5000/api/shop/cart/add",
+      import.meta.env.VITE_BACKEND_URL + '/api/shop/cart/add',
       {
         userId,
         productId,
@@ -23,10 +23,10 @@ export const addToCart = createAsyncThunk(
 );
 
 export const fetchCartItems = createAsyncThunk(
-  "cart/fetchCartItems",
+  'cart/fetchCartItems',
   async (userId) => {
     const response = await axios.get(
-      `http://localhost:5000/api/shop/cart/get/${userId}`
+      import.meta.env.VITE_BACKEND_URL + `/api/shop/cart/get/${userId}`
     );
 
     return response.data;
@@ -34,10 +34,10 @@ export const fetchCartItems = createAsyncThunk(
 );
 
 export const deleteCartItem = createAsyncThunk(
-  "cart/deleteCartItem",
-  async ({ userId, productId }) => {
+  'cart/deleteCartItem',
+  async ({userId, productId}) => {
     const response = await axios.delete(
-      `http://localhost:5000/api/shop/cart/${userId}/${productId}`
+      import.meta.env.VITE_BACKEND_URL + `/api/shop/cart/${userId}/${productId}`
     );
 
     return response.data;
@@ -45,10 +45,10 @@ export const deleteCartItem = createAsyncThunk(
 );
 
 export const updateCartQuantity = createAsyncThunk(
-  "cart/updateCartQuantity",
-  async ({ userId, productId, quantity }) => {
+  'cart/updateCartQuantity',
+  async ({userId, productId, quantity}) => {
     const response = await axios.put(
-      "http://localhost:5000/api/shop/cart/update-cart",
+      import.meta.env.VITE_BACKEND_URL + '/api/shop/cart/update-cart',
       {
         userId,
         productId,
@@ -61,7 +61,7 @@ export const updateCartQuantity = createAsyncThunk(
 );
 
 const shoppingCartSlice = createSlice({
-  name: "shoppingCart",
+  name: 'shoppingCart',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
