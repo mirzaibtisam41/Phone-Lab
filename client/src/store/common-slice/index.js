@@ -1,4 +1,4 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const initialState = {
@@ -22,9 +22,19 @@ export const addFeatureImage = createAsyncThunk(
   async (image) => {
     const response = await axios.post(
       import.meta.env.VITE_BACKEND_URL + `/api/common/feature/add`,
-      {image}
+      { image }
     );
 
+    return response.data;
+  }
+);
+
+export const deleteFeatureImage = createAsyncThunk(
+  import.meta.env.VITE_BACKEND_URL + '/order/deleteFeatureImage',
+  async (imageId) => {
+    const response = await axios.delete(
+      import.meta.env.VITE_BACKEND_URL + `/api/common/feature/delete/${imageId}`
+    );
     return response.data;
   }
 );

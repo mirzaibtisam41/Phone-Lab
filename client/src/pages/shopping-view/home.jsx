@@ -2,11 +2,9 @@ import { Button } from "@/components/ui/button";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
-  Smartphone, 
-  Tablet, 
-  Watch, 
-  Headphones, 
-  Plug, 
+  Smartphone,
+  Shield,
+  Cable
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useEffect, useState } from "react";
@@ -23,11 +21,9 @@ import ProductDetailsDialog from "@/components/shopping-view/product-details";
 import { getFeatureImages } from "@/store/common-slice";
 
 const categoriesWithIcon = [
-  { id: "mobilePhones", label: "Mobile Phones", icon: Smartphone },
-  { id: "tablets", label: "Tablets", icon: Tablet },
-  { id: "wearables", label: "Wearables", icon: Watch },
-  { id: "universalAccessories", label: "Universal Accessories", icon: Headphones },
-  { id: "accessories", label: "Accessories", icon: Plug },
+  { id: "cases", label: "Cases", icon: Smartphone },
+  { id: "temperedGlass", label: "Tempered Glass", icon: Shield },
+  { id: "accessories", label: "Accessories", icon: Cable },
 ];
 
 const brandsWithIcon = [
@@ -111,17 +107,16 @@ function ShoppingHome() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <div className="relative w-full h-[600px] overflow-hidden">
+      <div className="relative w-full h-[750px] overflow-hidden">
         {featureImageList && featureImageList.length > 0
           ? featureImageList.map((slide, index) => (
-              <img
-                src={slide?.image}
-                key={index}
-                className={`${
-                  index === currentSlide ? "opacity-100" : "opacity-0"
+            <img
+              src={slide?.image}
+              key={index}
+              className={`${index === currentSlide ? "opacity-100" : "opacity-0"
                 } absolute top-0 left-0 w-full h-full object-fill transition-opacity duration-1000`}
-              />
-            ))
+            />
+          ))
           : null}
         <Button
           variant="outline"
@@ -155,7 +150,7 @@ function ShoppingHome() {
           <h2 className="text-3xl font-bold text-center mb-8">
             Shop by Category
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
             {categoriesWithIcon.map((categoryItem) => (
               <Card
                 onClick={() =>
@@ -176,14 +171,14 @@ function ShoppingHome() {
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8">Shop by Brand</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
             {brandsWithIcon.map((brandItem) => (
               <Card
                 onClick={() => handleNavigateToListingPage(brandItem, "brand")}
                 className="cursor-pointer hover:shadow-lg transition-shadow"
               >
                 <CardContent className="flex flex-col items-center justify-center p-6">
-                  <img src={brandItem.icon} className="w-32 h-32 object-contain" />
+                  <img src={brandItem.icon} className="w-full h-24 object-contain" />
                 </CardContent>
 
               </Card>
@@ -193,21 +188,26 @@ function ShoppingHome() {
       </section>
 
       <section className="py-12">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8">
-            Feature Products
+        <div className="container mx-auto px-4 max-w-3xl text-center">
+          <h2 className="text-4xl font-bold text-gray-900 mb-6">
+            Our Services
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {productList && productList.length > 0
-              ? productList.map((productItem) => (
-                  <ShoppingProductTile
-                    handleGetProductDetails={handleGetProductDetails}
-                    product={productItem}
-                    handleAddtoCart={handleAddtoCart}
-                  />
-                ))
-              : null}
-          </div>
+          <p className="text-lg text-gray-700 leading-relaxed">
+            We’re offering a huge variety of mobile accessories like
+            <span className="font-semibold text-gray-900"> cases, tempered glass, chargers, cables, power banks, </span>
+            and much more.
+
+            <br /><br />
+
+            We also offer **same-day repair services** for
+            <span className="font-semibold text-gray-900"> iPhone, iPad, Android phones, Tablets, Laptops, </span>
+            & PlayStations.
+
+            <br /><br />
+
+            We specialize in bringing your devices back to life. Whether it’s a **cracked screen, battery issues, water damage,**
+            or **software glitches**, we’ve got you covered.
+          </p>
         </div>
       </section>
       <ProductDetailsDialog

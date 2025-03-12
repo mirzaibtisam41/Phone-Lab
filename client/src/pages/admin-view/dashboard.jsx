@@ -1,6 +1,7 @@
 import ProductImageUpload from "@/components/admin-view/image-upload";
 import { Button } from "@/components/ui/button";
-import { addFeatureImage, getFeatureImages } from "@/store/common-slice";
+import { addFeatureImage, deleteFeatureImage, getFeatureImages } from "@/store/common-slice";
+import { Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -21,6 +22,14 @@ function AdminDashboard() {
     });
   }
 
+  function handleDeleteFeatureImage(imageId) {
+    dispatch(deleteFeatureImage(imageId)).then((data) => {
+      if (data?.payload?.success) {
+        dispatch(getFeatureImages());
+      }
+    });
+  }
+
   useEffect(() => {
     dispatch(getFeatureImages());
   }, [dispatch]);
@@ -35,21 +44,30 @@ function AdminDashboard() {
         setImageLoadingState={setImageLoadingState}
         imageLoadingState={imageLoadingState}
         isCustomStyling={true}
-        // isEditMode={currentEditedId !== null}
+      // isEditMode={currentEditedId !== null}
       />
       <Button disabled={!uploadedImageUrl} onClick={handleUploadFeatureImage} className="mt-5 w-full">
         Upload
       </Button>
-      <div className="flex flex-col gap-4 mt-5">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 mt-5">
         {featureImageList && featureImageList.length > 0
-          ? featureImageList.map((featureImgItem) => (
-              <div className="relative">
-                <img
-                  src={featureImgItem.image}
-                  className="w-full h-[300px] object-cover rounded-t-lg"
-                />
-              </div>
-            ))
+          ? featureImageList.map((featureImgItem, index) => (
+            <div key={index} className="relative group rounded-lg overflow-hidden shadow-lg">
+              {/* Image */}
+              <img
+                src={featureImgItem.image}
+                className="w-full h-[300px] object-fill rounded-lg"
+              />
+
+              {/* Delete Button */}
+              <button
+                onClick={() => handleDeleteFeatureImage(featureImgItem._id)}
+                className="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition duration-300"
+              >
+                <Trash2 size={20} />
+              </button>
+            </div>
+          ))
           : null}
       </div>
     </div>

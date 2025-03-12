@@ -58,10 +58,8 @@ export const addProductFormElements = [
     name: "category",
     componentType: "select",
     options: [
-      { id: "mobilePhones", label: "Mobile Phones" },
-      { id: "tablets", label: "Tablets" },
-      { id: "wearables", label: "Wearables" },
-      { id: "universalAccessories", label: "Universal Accessories" },
+      { id: "cases", label: "Cases" },
+      { id: "temperedGlass", label: "Tempered Glass" },
       { id: "accessories", label: "Accessories" },
     ],
   },
@@ -113,23 +111,13 @@ export const shoppingViewHeaderMenuItems = [
     path: "/shop/listing",
   },
   {
-    id: "mobilePhones",
-    label: "Mobile Phones",
+    id: "cases",
+    label: "Cases",
     path: "/shop/listing",
   },
   {
-    id: "tablets",
-    label: "Tablets",
-    path: "/shop/listing",
-  },
-  {
-    id: "wearables",
-    label: "Wearables",
-    path: "/shop/listing",
-  },
-  {
-    id: "universalAccessories",
-    label: "Universal Accessories",
+    id: "temperedGlass",
+    label: "Tempered Glass",
     path: "/shop/listing",
   },
   {
@@ -145,11 +133,9 @@ export const shoppingViewHeaderMenuItems = [
 ];
 
 export const categoryOptionsMap = {
-  mobilePhones: "Mobile Phones",
-  tablets: "Tablets",
-  wearables: "Wearables",
+  cases: "Cases",
+  temperedGlass: "Tempered Glass",
   accessories: "Accessories",
-  universalAccessories:'Universal Accessories',
 };
 
 export const brandOptionsMap = {
@@ -163,10 +149,8 @@ export const brandOptionsMap = {
 
 export const filterOptions = {
   category: [
-    { id: "mobilePhones", label: "Mobile Phones" },
-    { id: "tablets", label: "Tablets" },
-    { id: "wearables", label: "Wearables" },
-    { id: "universalAccessories", label: "Universal Accessories" },
+    { id: "cases", label: "Cases" },
+    { id: "temperedGlass", label: "Tempered Glass" },
     { id: "accessories", label: "Accessories" },
   ],
   brand: [

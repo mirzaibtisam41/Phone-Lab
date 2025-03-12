@@ -40,4 +40,20 @@ const getFeatureImages = async (req, res) => {
   }
 };
 
-module.exports = { addFeatureImage, getFeatureImages };
+const deleteFeatureImage = async (req, res) => {
+  try {
+    const images = await Feature.deleteOne({ _id: req.params.id });
+
+    res.status(200).json({
+      success: true,
+      data: images,
+    });
+  } catch (e) {
+    res.status(500).json({
+      success: false,
+      message: "Some error occured!",
+    });
+  }
+};
+
+module.exports = { addFeatureImage, getFeatureImages, deleteFeatureImage };
