@@ -1,11 +1,11 @@
-import { useSelector } from "react-redux";
-import { Badge } from "../ui/badge";
-import { DialogContent } from "../ui/dialog";
-import { Label } from "../ui/label";
-import { Separator } from "../ui/separator";
+import {useSelector} from 'react-redux';
+import {Badge} from '../ui/badge';
+import {DialogContent} from '../ui/dialog';
+import {Label} from '../ui/label';
+import {Separator} from '../ui/separator';
 
-function ShoppingOrderDetailsView({ orderDetails }) {
-  const { user } = useSelector((state) => state.auth);
+function ShoppingOrderDetailsView({orderDetails}) {
+  const {user} = useSelector((state) => state.auth);
 
   return (
     <DialogContent className="sm:max-w-[600px]">
@@ -17,11 +17,11 @@ function ShoppingOrderDetailsView({ orderDetails }) {
           </div>
           <div className="flex mt-2 items-center justify-between">
             <p className="font-medium">Order Date</p>
-            <Label>{orderDetails?.orderDate.split("T")[0]}</Label>
+            <Label>{orderDetails?.orderDate.split('T')[0]}</Label>
           </div>
           <div className="flex mt-2 items-center justify-between">
             <p className="font-medium">Order Price</p>
-            <Label>${orderDetails?.totalAmount}</Label>
+            <Label>£{orderDetails?.totalAmount}</Label>
           </div>
           <div className="flex mt-2 items-center justify-between">
             <p className="font-medium">Payment method</p>
@@ -36,11 +36,11 @@ function ShoppingOrderDetailsView({ orderDetails }) {
             <Label>
               <Badge
                 className={`py-1 px-3 ${
-                  orderDetails?.orderStatus === "confirmed"
-                    ? "bg-green-500"
-                    : orderDetails?.orderStatus === "rejected"
-                    ? "bg-red-600"
-                    : "bg-black"
+                  orderDetails?.orderStatus === 'confirmed'
+                    ? 'bg-green-500'
+                    : orderDetails?.orderStatus === 'rejected'
+                    ? 'bg-red-600'
+                    : 'bg-black'
                 }`}
               >
                 {orderDetails?.orderStatus}

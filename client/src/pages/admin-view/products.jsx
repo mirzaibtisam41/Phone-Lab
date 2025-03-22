@@ -1,33 +1,33 @@
-import ProductImageUpload from "@/components/admin-view/image-upload";
-import AdminProductTile from "@/components/admin-view/product-tile";
-import CommonForm from "@/components/common/form";
-import { Button } from "@/components/ui/button";
+import ProductImageUpload from '@/components/admin-view/image-upload';
+import AdminProductTile from '@/components/admin-view/product-tile';
+import CommonForm from '@/components/common/form';
+import {Button} from '@/components/ui/button';
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
-} from "@/components/ui/sheet";
-import { useToast } from "@/components/ui/use-toast";
-import { addProductFormElements } from "@/config";
+} from '@/components/ui/sheet';
+import {useToast} from '@/components/ui/use-toast';
+import {addProductFormElements} from '@/config';
 import {
   addNewProduct,
   deleteProduct,
   editProduct,
   fetchAllProducts,
-} from "@/store/admin/products-slice";
-import { Fragment, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+} from '@/store/admin/products-slice';
+import {Fragment, useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 
 const initialFormData = {
   image: null,
-  title: "",
-  description: "",
-  // category: "",
-  brand: "",
-  price: "",
-  salePrice: "",
-  totalStock: "",
+  title: '',
+  description: '',
+  category: '', // Category added here
+  brand: '',
+  price: '',
+  salePrice: '',
+  totalStock: '',
   averageReview: 0,
 };
 
@@ -36,13 +36,13 @@ function AdminProducts() {
     useState(false);
   const [formData, setFormData] = useState(initialFormData);
   const [imageFile, setImageFile] = useState(null);
-  const [uploadedImageUrl, setUploadedImageUrl] = useState("");
+  const [uploadedImageUrl, setUploadedImageUrl] = useState('');
   const [imageLoadingState, setImageLoadingState] = useState(false);
   const [currentEditedId, setCurrentEditedId] = useState(null);
 
-  const { productList } = useSelector((state) => state.adminProducts);
+  const {productList} = useSelector((state) => state.adminProducts);
   const dispatch = useDispatch();
-  const { toast } = useToast();
+  const {toast} = useToast();
 
   function onSubmit(event) {
     event.preventDefault();
@@ -73,7 +73,7 @@ function AdminProducts() {
             setImageFile(null);
             setFormData(initialFormData);
             toast({
-              title: "Product add successfully",
+              title: 'Product added successfully',
             });
           }
         });
@@ -89,8 +89,13 @@ function AdminProducts() {
 
   function isFormValid() {
     return Object.keys(formData)
-      .filter((currentKey) => currentKey !== "averageReview")
-      .map((key) => formData[key] !== "")
+      .filter((currentKey) => currentKey !== 'averageReview')
+      .map((key) => {
+        if (key === 'brand' && formData.category === 'accessories') {
+          return true; // Skip brand validation if category is "accessories"
+        }
+        return formData[key] !== '';
+      })
       .every((item) => item);
   }
 
@@ -129,7 +134,7 @@ function AdminProducts() {
         <SheetContent side="right" className="overflow-auto">
           <SheetHeader>
             <SheetTitle>
-              {currentEditedId !== null ? "Edit Product" : "Add New Product"}
+              {currentEditedId !== null ? 'Edit Product' : 'Add New Product'}
             </SheetTitle>
           </SheetHeader>
           <ProductImageUpload
@@ -146,7 +151,7 @@ function AdminProducts() {
               onSubmit={onSubmit}
               formData={formData}
               setFormData={setFormData}
-              buttonText={currentEditedId !== null ? "Edit" : "Add"}
+              buttonText={currentEditedId !== null ? 'Edit' : 'Add'}
               formControls={addProductFormElements}
               isBtnDisabled={!isFormValid()}
             />

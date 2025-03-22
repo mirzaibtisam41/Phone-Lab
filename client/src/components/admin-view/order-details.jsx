@@ -1,33 +1,33 @@
-import { useState } from "react";
-import CommonForm from "../common/form";
-import { DialogContent } from "../ui/dialog";
-import { Label } from "../ui/label";
-import { Separator } from "../ui/separator";
-import { Badge } from "../ui/badge";
-import { useDispatch, useSelector } from "react-redux";
+import {useState} from 'react';
+import CommonForm from '../common/form';
+import {DialogContent} from '../ui/dialog';
+import {Label} from '../ui/label';
+import {Separator} from '../ui/separator';
+import {Badge} from '../ui/badge';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   getAllOrdersForAdmin,
   getOrderDetailsForAdmin,
   updateOrderStatus,
-} from "@/store/admin/order-slice";
-import { useToast } from "../ui/use-toast";
+} from '@/store/admin/order-slice';
+import {useToast} from '../ui/use-toast';
 
 const initialFormData = {
-  status: "",
+  status: '',
 };
 
-function AdminOrderDetailsView({ orderDetails }) {
+function AdminOrderDetailsView({orderDetails}) {
   const [formData, setFormData] = useState(initialFormData);
-  const { user } = useSelector((state) => state.auth);
+  const {user} = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const { toast } = useToast();
+  const {toast} = useToast();
 
   function handleUpdateStatus(event) {
     event.preventDefault();
-    const { status } = formData;
+    const {status} = formData;
 
     dispatch(
-      updateOrderStatus({ id: orderDetails?._id, orderStatus: status })
+      updateOrderStatus({id: orderDetails?._id, orderStatus: status})
     ).then((data) => {
       if (data?.payload?.success) {
         dispatch(getOrderDetailsForAdmin(orderDetails?._id));
@@ -50,11 +50,11 @@ function AdminOrderDetailsView({ orderDetails }) {
           </div>
           <div className="flex mt-2 items-center justify-between">
             <p className="font-medium">Order Date</p>
-            <Label>{orderDetails?.orderDate.split("T")[0]}</Label>
+            <Label>{orderDetails?.orderDate.split('T')[0]}</Label>
           </div>
           <div className="flex mt-2 items-center justify-between">
             <p className="font-medium">Order Price</p>
-            <Label>${orderDetails?.totalAmount}</Label>
+            <Label>£{orderDetails?.totalAmount}</Label>
           </div>
           <div className="flex mt-2 items-center justify-between">
             <p className="font-medium">Payment method</p>
@@ -69,11 +69,11 @@ function AdminOrderDetailsView({ orderDetails }) {
             <Label>
               <Badge
                 className={`py-1 px-3 ${
-                  orderDetails?.orderStatus === "confirmed"
-                    ? "bg-green-500"
-                    : orderDetails?.orderStatus === "rejected"
-                    ? "bg-red-600"
-                    : "bg-black"
+                  orderDetails?.orderStatus === 'confirmed'
+                    ? 'bg-green-500'
+                    : orderDetails?.orderStatus === 'rejected'
+                    ? 'bg-red-600'
+                    : 'bg-black'
                 }`}
               >
                 {orderDetails?.orderStatus}
@@ -116,21 +116,21 @@ function AdminOrderDetailsView({ orderDetails }) {
           <CommonForm
             formControls={[
               {
-                label: "Order Status",
-                name: "status",
-                componentType: "select",
+                label: 'Order Status',
+                name: 'status',
+                componentType: 'select',
                 options: [
-                  { id: "pending", label: "Pending" },
-                  { id: "inProcess", label: "In Process" },
-                  { id: "inShipping", label: "In Shipping" },
-                  { id: "delivered", label: "Delivered" },
-                  { id: "rejected", label: "Rejected" },
+                  {id: 'pending', label: 'Pending'},
+                  {id: 'inProcess', label: 'In Process'},
+                  {id: 'inShipping', label: 'In Shipping'},
+                  {id: 'delivered', label: 'Delivered'},
+                  {id: 'rejected', label: 'Rejected'},
                 ],
               },
             ]}
             formData={formData}
             setFormData={setFormData}
-            buttonText={"Update Order Status"}
+            buttonText={'Update Order Status'}
             onSubmit={handleUpdateStatus}
           />
         </div>

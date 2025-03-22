@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { Button } from "../ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { Dialog } from "../ui/dialog";
+import {useEffect, useState} from 'react';
+import {Button} from '../ui/button';
+import {Card, CardContent, CardHeader, CardTitle} from '../ui/card';
+import {Dialog} from '../ui/dialog';
 import {
   Table,
   TableBody,
@@ -9,19 +9,19 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../ui/table";
-import AdminOrderDetailsView from "./order-details";
-import { useDispatch, useSelector } from "react-redux";
+} from '../ui/table';
+import AdminOrderDetailsView from './order-details';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   getAllOrdersForAdmin,
   getOrderDetailsForAdmin,
   resetOrderDetails,
-} from "@/store/admin/order-slice";
-import { Badge } from "../ui/badge";
+} from '@/store/admin/order-slice';
+import {Badge} from '../ui/badge';
 
 function AdminOrdersView() {
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
-  const { orderList, orderDetails } = useSelector((state) => state.adminOrder);
+  const {orderList, orderDetails} = useSelector((state) => state.adminOrder);
   const dispatch = useDispatch();
 
   function handleFetchOrderDetails(getId) {
@@ -59,21 +59,21 @@ function AdminOrdersView() {
               ? orderList.map((orderItem) => (
                   <TableRow>
                     <TableCell>{orderItem?._id}</TableCell>
-                    <TableCell>{orderItem?.orderDate.split("T")[0]}</TableCell>
+                    <TableCell>{orderItem?.orderDate.split('T')[0]}</TableCell>
                     <TableCell>
                       <Badge
                         className={`py-1 px-3 ${
-                          orderItem?.orderStatus === "confirmed"
-                            ? "bg-green-500"
-                            : orderItem?.orderStatus === "rejected"
-                            ? "bg-red-600"
-                            : "bg-black"
+                          orderItem?.orderStatus === 'confirmed'
+                            ? 'bg-green-500'
+                            : orderItem?.orderStatus === 'rejected'
+                            ? 'bg-red-600'
+                            : 'bg-black'
                         }`}
                       >
                         {orderItem?.orderStatus}
                       </Badge>
                     </TableCell>
-                    <TableCell>${orderItem?.totalAmount}</TableCell>
+                    <TableCell>£{orderItem?.totalAmount}</TableCell>
                     <TableCell>
                       <Dialog
                         open={openDetailsDialog}
