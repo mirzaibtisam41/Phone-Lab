@@ -1,7 +1,7 @@
-import { Card, CardContent, CardFooter } from "../ui/card";
-import { Button } from "../ui/button";
-import { brandOptionsMap, categoryOptionsMap } from "@/config";
-import { Badge } from "../ui/badge";
+import {Card, CardContent, CardFooter} from '../ui/card';
+import {Button} from '../ui/button';
+import {brandOptionsMap, categoryOptionsMap} from '@/config';
+import {Badge} from '../ui/badge';
 
 function ShoppingProductTile({
   product,
@@ -15,7 +15,7 @@ function ShoppingProductTile({
           <img
             src={product?.image}
             alt={product?.title}
-            className="w-full h-[300px] object-cover rounded-t-lg"
+            className="w-full h-[300px] object-fill rounded-t-lg"
           />
           {product?.totalStock === 0 ? (
             <Badge className="absolute top-2 left-2 bg-red-500 hover:bg-red-600">
@@ -44,7 +44,7 @@ function ShoppingProductTile({
           <div className="flex justify-between items-center mb-2">
             <span
               className={`${
-                product?.salePrice > 0 ? "line-through" : ""
+                product?.salePrice > 0 ? 'line-through' : ''
               } text-lg font-semibold text-primary`}
             >
               ${product?.price}
