@@ -1,31 +1,28 @@
-import ProductDetailsDialog from "@/components/shopping-view/product-details";
-import ShoppingProductTile from "@/components/shopping-view/product-tile";
-import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
-import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
-import { fetchProductDetails } from "@/store/shop/products-slice";
-import {
-  getSearchResults,
-  resetSearchResults,
-} from "@/store/shop/search-slice";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import ProductDetailsDialog from '@/components/shopping-view/product-details';
+import ShoppingProductTile from '@/components/shopping-view/product-tile';
+import {Input} from '@/components/ui/input';
+import {useToast} from '@/components/ui/use-toast';
+import {addToCart, fetchCartItems} from '@/store/shop/cart-slice';
+import {fetchProductDetails} from '@/store/shop/products-slice';
+import {getSearchResults, resetSearchResults} from '@/store/shop/search-slice';
+import {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {useSearchParams} from 'react-router-dom';
 
 function SearchProducts() {
-  const [keyword, setKeyword] = useState("");
+  const [keyword, setKeyword] = useState('');
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
-  const { searchResults } = useSelector((state) => state.shopSearch);
-  const { productDetails } = useSelector((state) => state.shopProducts);
+  const {searchResults} = useSelector((state) => state.shopSearch);
+  const {productDetails} = useSelector((state) => state.shopProducts);
 
-  const { user } = useSelector((state) => state.auth);
+  const {user} = useSelector((state) => state.auth);
 
-  const { cartItems } = useSelector((state) => state.shopCart);
-  const { toast } = useToast();
+  const {cartItems} = useSelector((state) => state.shopCart);
+  const {toast} = useToast();
   useEffect(() => {
-    if (keyword && keyword.trim() !== "" && keyword.trim().length > 3) {
+    if (keyword && keyword.trim() !== '' && keyword.trim().length > 3) {
       setTimeout(() => {
         setSearchParams(new URLSearchParams(`?keyword=${keyword}`));
         dispatch(getSearchResults(keyword));
@@ -48,12 +45,19 @@ function SearchProducts() {
         if (getQuantity + 1 > getTotalStock) {
           toast({
             title: `Only ${getQuantity} quantity can be added for this item`,
-            variant: "destructive",
+            variant: 'destructive',
           });
 
           return;
         }
       }
+    }
+
+    if (!user?.id) {
+      return toast({
+        title: 'Please login to add product to cart',
+        variant: 'destructive',
+      });
     }
 
     dispatch(
@@ -66,7 +70,7 @@ function SearchProducts() {
       if (data?.payload?.success) {
         dispatch(fetchCartItems(user?.id));
         toast({
-          title: "Product is added to cart",
+          title: 'Product is added to cart',
         });
       }
     });

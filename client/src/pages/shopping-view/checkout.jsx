@@ -94,8 +94,13 @@ function ShoppingCheckout() {
 
   return (
     <div className="flex flex-col">
-      <div className="relative h-[300px] w-full overflow-hidden">
-        <img src={img} className="h-full w-full object-cover object-center" />
+      <div className="relative h-[50vh] w-full overflow-hidden">
+        <img
+          src={
+            'https://res.cloudinary.com/dslhiitnk/image/upload/v1741601124/nsp5we0hmeplbd7qyhpd.jpg'
+          }
+          className="h-full w-full object-fill"
+        />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-5 p-5">
         <Address

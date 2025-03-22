@@ -46,6 +46,14 @@ function ProductDetailsDialog({open, setOpen, productDetails}) {
         }
       }
     }
+
+    if (!user?.id) {
+      return toast({
+        title: 'Please login to add product to cart',
+        variant: 'destructive',
+      });
+    }
+
     dispatch(
       addToCart({
         userId: user?.id,

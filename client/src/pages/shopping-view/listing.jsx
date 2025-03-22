@@ -1,61 +1,61 @@
-import ProductFilter from "@/components/shopping-view/filter";
-import ProductDetailsDialog from "@/components/shopping-view/product-details";
-import ShoppingProductTile from "@/components/shopping-view/product-tile";
-import { Button } from "@/components/ui/button";
+import ProductFilter from '@/components/shopping-view/filter';
+import ProductDetailsDialog from '@/components/shopping-view/product-details';
+import ShoppingProductTile from '@/components/shopping-view/product-tile';
+import {Button} from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { useToast } from "@/components/ui/use-toast";
-import { sortOptions } from "@/config";
-import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
+} from '@/components/ui/dropdown-menu';
+import {useToast} from '@/components/ui/use-toast';
+import {sortOptions} from '@/config';
+import {addToCart, fetchCartItems} from '@/store/shop/cart-slice';
 import {
   fetchAllFilteredProducts,
   fetchProductDetails,
-} from "@/store/shop/products-slice";
-import { ArrowUpDownIcon } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+} from '@/store/shop/products-slice';
+import {ArrowUpDownIcon} from 'lucide-react';
+import {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {useSearchParams} from 'react-router-dom';
 
 function createSearchParamsHelper(filterParams) {
   const queryParams = [];
 
   for (const [key, value] of Object.entries(filterParams)) {
     if (Array.isArray(value) && value.length > 0) {
-      const paramValue = value.join(",");
+      const paramValue = value.join(',');
 
       queryParams.push(`${key}=${encodeURIComponent(paramValue)}`);
     }
   }
 
-  return queryParams.join("&");
+  return queryParams.join('&');
 }
 
 function ShoppingListing() {
   const dispatch = useDispatch();
-  const { productList, productDetails } = useSelector(
+  const {productList, productDetails} = useSelector(
     (state) => state.shopProducts
   );
-  const { cartItems } = useSelector((state) => state.shopCart);
-  const { user } = useSelector((state) => state.auth);
+  const {cartItems} = useSelector((state) => state.shopCart);
+  const {user} = useSelector((state) => state.auth);
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
-  const { toast } = useToast();
+  const {toast} = useToast();
 
-  const categorySearchParam = searchParams.get("category");
+  const categorySearchParam = searchParams.get('category');
 
   function handleSort(value) {
     setSort(value);
   }
 
   function handleFilter(getSectionId, getCurrentOption) {
-    let cpyFilters = { ...filters };
+    let cpyFilters = {...filters};
     const indexOfCurrentSection = Object.keys(cpyFilters).indexOf(getSectionId);
 
     if (indexOfCurrentSection === -1) {
@@ -73,7 +73,7 @@ function ShoppingListing() {
     }
 
     setFilters(cpyFilters);
-    sessionStorage.setItem("filters", JSON.stringify(cpyFilters));
+    sessionStorage.setItem('filters', JSON.stringify(cpyFilters));
   }
 
   function handleGetProductDetails(getCurrentProductId) {
@@ -92,12 +92,19 @@ function ShoppingListing() {
         if (getQuantity + 1 > getTotalStock) {
           toast({
             title: `Only ${getQuantity} quantity can be added for this item`,
-            variant: "destructive",
+            variant: 'destructive',
           });
 
           return;
         }
       }
+    }
+
+    if (!user?.id) {
+      return toast({
+        title: 'Please login to add product to cart',
+        variant: 'destructive',
+      });
     }
 
     dispatch(
@@ -110,15 +117,15 @@ function ShoppingListing() {
       if (data?.payload?.success) {
         dispatch(fetchCartItems(user?.id));
         toast({
-          title: "Product is added to cart",
+          title: 'Product is added to cart',
         });
       }
     });
   }
 
   useEffect(() => {
-    setSort("price-lowtohigh");
-    setFilters(JSON.parse(sessionStorage.getItem("filters")) || {});
+    setSort('price-lowtohigh');
+    setFilters(JSON.parse(sessionStorage.getItem('filters')) || {});
   }, [categorySearchParam]);
 
   useEffect(() => {
@@ -131,7 +138,7 @@ function ShoppingListing() {
   useEffect(() => {
     if (filters !== null && sort !== null)
       dispatch(
-        fetchAllFilteredProducts({ filterParams: filters, sortParams: sort })
+        fetchAllFilteredProducts({filterParams: filters, sortParams: sort})
       );
   }, [dispatch, sort, filters]);
 
