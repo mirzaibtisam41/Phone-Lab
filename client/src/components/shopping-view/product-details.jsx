@@ -1,27 +1,27 @@
-import { StarIcon } from "lucide-react";
-import { Avatar, AvatarFallback } from "../ui/avatar";
-import { Button } from "../ui/button";
-import { Dialog, DialogContent } from "../ui/dialog";
-import { Separator } from "../ui/separator";
-import { Input } from "../ui/input";
-import { useDispatch, useSelector } from "react-redux";
-import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
-import { useToast } from "../ui/use-toast";
-import { setProductDetails } from "@/store/shop/products-slice";
-import { Label } from "../ui/label";
-import StarRatingComponent from "../common/star-rating";
-import { useEffect, useState } from "react";
-import { addReview, getReviews } from "@/store/shop/review-slice";
+import {StarIcon} from 'lucide-react';
+import {Avatar, AvatarFallback} from '../ui/avatar';
+import {Button} from '../ui/button';
+import {Dialog, DialogContent} from '../ui/dialog';
+import {Separator} from '../ui/separator';
+import {Input} from '../ui/input';
+import {useDispatch, useSelector} from 'react-redux';
+import {addToCart, fetchCartItems} from '@/store/shop/cart-slice';
+import {useToast} from '../ui/use-toast';
+import {setProductDetails} from '@/store/shop/products-slice';
+import {Label} from '../ui/label';
+import StarRatingComponent from '../common/star-rating';
+import {useEffect, useState} from 'react';
+import {addReview, getReviews} from '@/store/shop/review-slice';
 
-function ProductDetailsDialog({ open, setOpen, productDetails }) {
-  const [reviewMsg, setReviewMsg] = useState("");
+function ProductDetailsDialog({open, setOpen, productDetails}) {
+  const [reviewMsg, setReviewMsg] = useState('');
   const [rating, setRating] = useState(0);
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
-  const { cartItems } = useSelector((state) => state.shopCart);
-  const { reviews } = useSelector((state) => state.shopReview);
+  const {user} = useSelector((state) => state.auth);
+  const {cartItems} = useSelector((state) => state.shopCart);
+  const {reviews} = useSelector((state) => state.shopReview);
 
-  const { toast } = useToast();
+  const {toast} = useToast();
 
   function handleRatingChange(getRating) {
     setRating(getRating);
@@ -39,7 +39,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
         if (getQuantity + 1 > getTotalStock) {
           toast({
             title: `Only ${getQuantity} quantity can be added for this item`,
-            variant: "destructive",
+            variant: 'destructive',
           });
 
           return;
@@ -56,7 +56,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
       if (data?.payload?.success) {
         dispatch(fetchCartItems(user?.id));
         toast({
-          title: "Product is added to cart",
+          title: 'Product is added to cart',
         });
       }
     });
@@ -66,7 +66,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
     setOpen(false);
     dispatch(setProductDetails());
     setRating(0);
-    setReviewMsg("");
+    setReviewMsg('');
   }
 
   function handleAddReview() {
@@ -79,15 +79,26 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
         reviewValue: rating,
       })
     ).then((data) => {
-      if (data.payload.success) {
+      if (data?.payload?.success) {
         setRating(0);
-        setReviewMsg("");
+        setReviewMsg('');
         dispatch(getReviews(productDetails?._id));
         toast({
-          title: "Review added successfully!",
+          title: 'Review added successfully!',
         });
       }
+
+      if (data?.payload?.message)
+        toast({
+          title: data?.payload?.message,
+          variant: 'destructive',
+        });
     });
+
+    //  toast({
+    //    title: data?.payload?.message,
+    //    variant: 'destructive',
+    //  });
   }
 
   useEffect(() => {
@@ -122,7 +133,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
           <div className="flex items-center justify-between">
             <p
               className={`text-3xl font-bold text-primary ${
-                productDetails?.salePrice > 0 ? "line-through" : ""
+                productDetails?.salePrice > 0 ? 'line-through' : ''
               }`}
             >
               ${productDetails?.price}
@@ -205,7 +216,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
               />
               <Button
                 onClick={handleAddReview}
-                disabled={reviewMsg.trim() === ""}
+                disabled={reviewMsg.trim() === ''}
               >
                 Submit
               </Button>
