@@ -1,18 +1,18 @@
-import { Minus, Plus, Trash } from "lucide-react";
-import { Button } from "../ui/button";
-import { useDispatch, useSelector } from "react-redux";
-import { deleteCartItem, updateCartQuantity } from "@/store/shop/cart-slice";
-import { useToast } from "../ui/use-toast";
+import {Minus, Plus, Trash} from 'lucide-react';
+import {Button} from '../ui/button';
+import {useDispatch, useSelector} from 'react-redux';
+import {deleteCartItem, updateCartQuantity} from '@/store/shop/cart-slice';
+import {useToast} from '../ui/use-toast';
 
-function UserCartItemsContent({ cartItem }) {
-  const { user } = useSelector((state) => state.auth);
-  const { cartItems } = useSelector((state) => state.shopCart);
-  const { productList } = useSelector((state) => state.shopProducts);
+function UserCartItemsContent({cartItem}) {
+  const {user} = useSelector((state) => state.auth);
+  const {cartItems} = useSelector((state) => state.shopCart);
+  const {productList} = useSelector((state) => state.shopProducts);
   const dispatch = useDispatch();
-  const { toast } = useToast();
+  const {toast} = useToast();
 
   function handleUpdateQuantity(getCartItem, typeOfAction) {
-    if (typeOfAction == "plus") {
+    if (typeOfAction == 'plus') {
       let getCartItems = cartItems.items || [];
 
       if (getCartItems.length) {
@@ -30,7 +30,7 @@ function UserCartItemsContent({ cartItem }) {
           if (getQuantity + 1 > getTotalStock) {
             toast({
               title: `Only ${getQuantity} quantity can be added for this item`,
-              variant: "destructive",
+              variant: 'destructive',
             });
 
             return;
@@ -44,14 +44,14 @@ function UserCartItemsContent({ cartItem }) {
         userId: user?.id,
         productId: getCartItem?.productId,
         quantity:
-          typeOfAction === "plus"
+          typeOfAction === 'plus'
             ? getCartItem?.quantity + 1
             : getCartItem?.quantity - 1,
       })
     ).then((data) => {
       if (data?.payload?.success) {
         toast({
-          title: "Cart item is updated successfully",
+          title: 'Cart item is updated successfully',
         });
       }
     });
@@ -59,11 +59,11 @@ function UserCartItemsContent({ cartItem }) {
 
   function handleCartItemDelete(getCartItem) {
     dispatch(
-      deleteCartItem({ userId: user?.id, productId: getCartItem?.productId })
+      deleteCartItem({userId: user?.id, productId: getCartItem?.productId})
     ).then((data) => {
       if (data?.payload?.success) {
         toast({
-          title: "Cart item is deleted successfully",
+          title: 'Cart item is deleted successfully',
         });
       }
     });
