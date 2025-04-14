@@ -91,7 +91,7 @@ function AdminOrderDetailsView({orderDetails}) {
                     <li className="flex items-center justify-between">
                       <span>Title: {item.title}</span>
                       <span>Quantity: {item.quantity}</span>
-                      <span>Price: ${item.price}</span>
+                      <span>Price: £{item.price}</span>
                     </li>
                   ))
                 : null}
